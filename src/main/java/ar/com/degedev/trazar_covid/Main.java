@@ -1,4 +1,4 @@
-package ar.com.degedev.trazar_covid;
+package main.java.ar.com.degedev.trazar_covid;
 
 
 import ar.com.degedev.trazar_covid.model.Cliente;

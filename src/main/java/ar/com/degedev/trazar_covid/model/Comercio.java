@@ -1,10 +1,7 @@
 package ar.com.degedev.trazar_covid.model;
 
 
-
-
 public class Comercio {
-
 
     private Integer Id;
 
