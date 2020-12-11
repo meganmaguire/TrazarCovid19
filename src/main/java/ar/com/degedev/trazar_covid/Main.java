@@ -70,7 +70,7 @@ public class Main extends Application {
             rootLayout.setCenter(ventanaPrincipal);
 
             VentanaPrincipalController controller = loader.getController();
-            controller.setMain(this);
+            controller.setListadoClientes(this);
         }
         catch (IOException e){
 

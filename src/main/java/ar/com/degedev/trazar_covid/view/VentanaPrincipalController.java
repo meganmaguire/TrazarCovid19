@@ -85,10 +85,15 @@ public class VentanaPrincipalController {
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
     }
 
-    public void setMain(Main main){
+    public void setListadoClientes(Main main){
         this.main = main;
 
         tablaListadoClientes.setItems(main.getClientes());
+    }
+
+    @FXML
+    public void buscarPersonaPorComercio(){
+
     }
 }
 

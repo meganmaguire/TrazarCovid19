@@ -103,7 +103,7 @@
                         <DatePicker layoutX="333.0" layoutY="99.0" prefHeight="25.0" prefWidth="163.0" />
                         <Label layoutX="44.0" layoutY="105.0" text="Desde:" />
                         <Label layoutX="284.0" layoutY="105.0" text="Hasta:" />
-                        <Button layoutX="571.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Buscar" />
+                        <Button layoutX="571.0" layoutY="100.0" mnemonicParsing="false" onAction="#buscarPersonaPorComercio" prefHeight="25.0" prefWidth="95.0" text="Buscar" />
                      </children>
                   </AnchorPane>
                </content>
