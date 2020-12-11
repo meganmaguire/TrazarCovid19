@@ -2,6 +2,7 @@ package ar.com.degedev.trazar_covid;
 
 
 import ar.com.degedev.trazar_covid.model.Cliente;
+import ar.com.degedev.trazar_covid.model.Comercio;
 import ar.com.degedev.trazar_covid.view.VentanaPrincipalController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -20,14 +21,23 @@ public class Main extends Application {
     private BorderPane rootLayout;
     private ObservableList<Cliente> clientes = FXCollections.observableArrayList();
 
+
+    private ObservableList<Comercio> comercios = FXCollections.observableArrayList();
+
     public Main(){
         clientes.add(new Cliente(39490591, "Megan", "Maguire", "Av. Ejército de los Andes 569", "2664828390"));
         clientes.add(new Cliente(39381308, "Franco", "Merenda", "Av. Ejército de los Andes 569", "260339838"));
+        comercios.add(new Comercio(20394905912L, "La despensa", "San Martin 234", "2664565656"));
     }
 
     public ObservableList<Cliente> getClientes(){
         return clientes;
     }
+
+    public ObservableList<Comercio> getComercios() {
+        return comercios;
+    }
+
 
     public static void main(String[] args) {
         launch(args);
@@ -71,6 +81,8 @@ public class Main extends Application {
 
             VentanaPrincipalController controller = loader.getController();
             controller.setListadoClientes(this);
+            controller.setComboBoxClientes(this);
+            controller.setComboBoxClientesPorComercio(this);
         }
         catch (IOException e){
 
