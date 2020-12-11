@@ -121,7 +121,7 @@
                               <TableColumn prefWidth="105.0" text="Telefono" />
                            </columns>
                         </TableView>
-                        <Button layoutX="571.0" layoutY="101.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Buscar" />
+                        <Button layoutX="571.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Buscar" />
                         <Label layoutX="284.0" layoutY="105.0" text="Hasta:" />
                         <Label layoutX="44.0" layoutY="105.0" text="Desde:" />
                         <DatePicker layoutX="333.0" layoutY="99.0" prefHeight="25.0" prefWidth="163.0" />
