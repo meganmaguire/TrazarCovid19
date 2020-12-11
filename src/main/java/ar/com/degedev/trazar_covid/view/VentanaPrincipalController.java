@@ -2,9 +2,10 @@ package ar.com.degedev.trazar_covid.view;
 
 import ar.com.degedev.trazar_covid.Main;
 import ar.com.degedev.trazar_covid.model.Cliente;
+import ar.com.degedev.trazar_covid.model.Comercio;
+import ar.com.degedev.trazar_covid.model.Registro;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -12,6 +13,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import java.time.LocalDateTime;
 
 public class VentanaPrincipalController {
 
@@ -68,6 +71,39 @@ public class VentanaPrincipalController {
 
     @FXML
     private TableColumn<Cliente, String> apellidoListadoClientes;
+
+    @FXML
+    private void cleanFields() {
+        nombreCliente.setText("");
+        apellidoCliente.setText("");
+        dniCliente.setText("");
+        direccionCliente.setText("");
+        telCliente.setText("");
+        comercioListaDesplegable.getSelectionModel().clearSelection();
+        comercioListaDesplegable.setValue(null);
+    }
+
+    @FXML
+    private void createRegistro(){
+        try {
+            String nombre = nombreCliente.getText();
+            String apellido = apellidoCliente.getText();
+            Integer dni = Integer.valueOf(dniCliente.getText());
+            String direccion = direccionCliente.getText();
+            String telefono = telCliente.getText();
+
+            Cliente cliente = new Cliente(dni, nombre, apellido, direccion, telefono);
+            // ToDo get comercio from data base.
+            Comercio comercio = new Comercio();
+
+            Registro nuevoRegistro = new Registro(cliente, comercio, LocalDateTime.now());
+
+            System.out.println(nuevoRegistro.toString());
+        } catch (Exception e) {
+            System.out.println("Algo esta roto pibe");
+        }
+
+    }
 
 
     private Main main;

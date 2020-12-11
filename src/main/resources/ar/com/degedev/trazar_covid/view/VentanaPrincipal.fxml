@@ -2,8 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="500.0" minWidth="685.0" prefHeight="500.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.com.degedev.trazar_covid.view.VentanaPrincipalController">
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="500.0" minWidth="685.0" prefHeight="500.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.com.degedev.trazar_covid.view.VentanaPrincipalController">
    <children>
       <TabPane prefHeight="488.0" prefWidth="685.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -18,8 +19,8 @@
                         </Label>
                         <HBox layoutX="401.0" layoutY="407.0" prefHeight="26.0" prefWidth="226.0" spacing="15.0" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="58.0">
                            <children>
-                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
-                              <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#cleanFields" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
+                              <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" onAction="#createRegistro" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <GridPane hgap="15.0" layoutX="172.0" layoutY="85.0" prefHeight="263.0" prefWidth="341.0" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="172.0">
