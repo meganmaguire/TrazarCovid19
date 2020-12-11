@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2c1ccdda-deab-4076-b714-daabda9b34bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/TrazarCovid19.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Trazar.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/model/Cliente.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/model/Comercio.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/model/Registro.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/model/User.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/view/RootLayout.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/view/VentanaPrincipal.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Trazar/ar/com/degedev/trazar_covid/view/VentanaPrincipalController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/model/Cliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/model/Comercio.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/model/Registro.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/view/RootLayout.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/view/VentanaPrincipal.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/view/VentanaPrincipalController.java" afterDir="false" />
-    </list>
+    <list default="true" id="2c1ccdda-deab-4076-b714-daabda9b34bb" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="30" lean-forward="true" selection-start-line="21" selection-end-line="30" />
+            <state relative-caret-position="284">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -57,9 +34,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="967" />
+    <option name="x" value="658" />
     <option name="y" value="27" />
-    <option name="width" value="953" />
+    <option name="width" value="1262" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectView">
@@ -136,31 +113,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607710270837</updated>
-      <workItem from="1607710272517" duration="298000" />
+      <workItem from="1607710272517" duration="1121000" />
     </task>
+    <task id="LOCAL-00001" summary="Commit inicial">
+      <created>1607710783138</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607710783138</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="298000" />
+    <option name="totallyTimeSpent" value="1121000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="967" y="27" width="953" height="1053" extended-state="4" />
+    <frame x="658" y="27" width="1262" height="1053" extended-state="4" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3131202" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18667763" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" weight="0.3293348" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info active="true" anchor="bottom" id="Version Control" visible="true" weight="0.3293348" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3293348" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -179,14 +166,18 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit inicial" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit inicial" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Trazar.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ar/com/degedev/trazar_covid/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="30" lean-forward="true" selection-start-line="21" selection-end-line="30" />
+        <state relative-caret-position="284">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
