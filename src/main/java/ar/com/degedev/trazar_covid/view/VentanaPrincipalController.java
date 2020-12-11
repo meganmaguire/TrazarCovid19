@@ -185,9 +185,8 @@ public class VentanaPrincipalController {
         tablaListadoClientes.setItems(main.getClientes());
     }
 
-    public void setComboBoxClientes(Main main){
-
-        comercioListaDesplegable.setConverter(new StringConverter<Comercio>() {
+    public void setComboBox(ComboBox combobox,Main main){
+        combobox.setConverter(new StringConverter<Comercio>() {
             @Override
             public String toString(Comercio comercio) {
                 return comercio.getNombre();
@@ -198,29 +197,24 @@ public class VentanaPrincipalController {
                 return null;
             }
         });
+        combobox.setItems(main.getComercios());
+        combobox.getSelectionModel().selectFirst();
+    }
+    public void setComboBoxClientes(Main main){
 
-        comercioListaDesplegable.setItems(main.getComercios());
+        setComboBox(comercioListaDesplegable,main);
     }
 
     public void setComboBoxClientesPorComercio(Main main) {
 
-        comercioListaDesplegableConsulta.setConverter(new StringConverter<Comercio>() {
-            @Override
-            public String toString(Comercio comercio) {
-                return comercio.getNombre();
-            }
-
-            @Override
-            public Comercio fromString(String string) {
-                return null;
-            }
-        });
-
-        comercioListaDesplegableConsulta.setItems(main.getComercios());
+        setComboBox(comercioListaDesplegableConsulta,main);
     }
 
     @FXML
     public void buscarPersonaPorComercio(){
+
+        Comercio comercio = comercioListaDesplegableConsulta.getValue();
+
 
     }
 }

@@ -21,12 +21,12 @@ public class Main extends Application {
     private BorderPane rootLayout;
     private ObservableList<Cliente> clientes = FXCollections.observableArrayList();
 
-
     private ObservableList<Comercio> comercios = FXCollections.observableArrayList();
 
     public Main(){
         clientes.add(new Cliente(39490591, "Megan", "Maguire", "Av. Ejército de los Andes 569", "2664828390"));
         clientes.add(new Cliente(39381308, "Franco", "Merenda", "Av. Ejército de los Andes 569", "260339838"));
+        comercios.add(new Comercio(20395405962L, "La Verdulería", "Rivadavia 632", "2664123656"));
         comercios.add(new Comercio(20394905912L, "La despensa", "San Martin 234", "2664565656"));
     }
 
