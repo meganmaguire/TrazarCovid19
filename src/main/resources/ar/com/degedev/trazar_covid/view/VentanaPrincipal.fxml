@@ -21,8 +21,8 @@
                         </Label>
                         <HBox layoutX="401.0" layoutY="407.0" prefHeight="26.0" prefWidth="226.0" spacing="15.0" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="58.0">
                            <children>
-                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
-                              <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#cleanFields" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
+                              <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" onAction="#createRegistro" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <GridPane hgap="15.0" layoutX="172.0" layoutY="85.0" prefHeight="263.0" prefWidth="341.0" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="172.0">
