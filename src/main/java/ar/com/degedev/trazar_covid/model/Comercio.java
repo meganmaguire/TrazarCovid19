@@ -1,6 +1,8 @@
 package ar.com.degedev.trazar_covid.model;
 
+import lombok.Data;
 
+@Data
 public class Comercio {
 
     private Integer Id;
