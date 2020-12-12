@@ -1,5 +1,6 @@
 package ar.com.degedev.trazar_covid.frontend.view;
 
+import ar.com.degedev.trazar_covid.backend.api.ClienteAPI;
 import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
@@ -135,7 +136,10 @@ public class VentanaPrincipalController {
 
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
+    private ClienteAPI clientesAPI;
+
     private ObservableList<Comercio> comercios;
+    private ObservableList<Cliente> clientes;
 
     @FXML
     private void cleanFields() {
@@ -173,16 +177,26 @@ public class VentanaPrincipalController {
 
     @FXML
     private void initialize() {
-        this.comercioAPI = ApplicationCtx.getInstance().getAPIs().getComercioAPI();
+        val apis = ApplicationCtx.getInstance().getAPIs();
+        this.comercioAPI = apis.getComercioAPI();
+        this.clientesAPI = apis.getClienteAPI();
+
         try {
             this.comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
+            this.clientes = FXCollections.observableArrayList(this.clientesAPI.listarClientes().execute().body());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // ComboBox
         comercioListaDesplegable.setItems(this.comercios);
         comercioListaDesplegable.getSelectionModel().selectFirst();
         comercioListaDesplegableConsulta.setItems(this.comercios);
         comercioListaDesplegableConsulta.getSelectionModel().selectFirst();
+        comercioListaDesplegable.getSelectionModel().selectFirst();
+        tablaListadoClientes.setItems(this.clientes);
+
+        // Tabla Clientes
         apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
         nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
         dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
