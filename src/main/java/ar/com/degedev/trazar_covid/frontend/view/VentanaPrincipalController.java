@@ -1,6 +1,9 @@
 package ar.com.degedev.trazar_covid.frontend.view;
 
+import ar.com.degedev.trazar_covid.backend.service.ComercioService;
+import ar.com.degedev.trazar_covid.backend.service.Service;
 import ar.com.degedev.trazar_covid.backend.util.CustomAlert;
+import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
 import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
@@ -132,6 +135,9 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
         @FXML
         private TableColumn<Cliente, Comercio> dniClientesPorComercio;
 
+        private List<Service> services;
+        private ExpressionChecker expressionChecker;
+
     @FXML
     private void cleanFields() {
         nombreCliente.setText("");
@@ -179,6 +185,15 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
         dniListadoClientes.setCellValueFactory(cellData -> (ObservableValue) new SimpleIntegerProperty(cellData.getValue().getDNI()));
         dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
+
+        try {
+
+            this.services.get(0).searchComercios();
+        } catch (Exception exception) {
+
+            System.out.println("No exploto solo no tiene los sericios cargados\nTenga un buen dia");
+            exception.printStackTrace();
+        }
     }
 
     public void setListadoClientes(Main main){
@@ -233,7 +248,7 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
 
     @Override
     public void showComercios(List<Comercio> comercios) {
-
+        this.loadComercioListaDesplegable(comercios);
     }
 }
 

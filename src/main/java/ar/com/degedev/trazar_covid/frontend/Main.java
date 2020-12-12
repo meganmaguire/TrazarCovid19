@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    public static final String API_HOSTNAME = "34.74.103.67"; // Maquina Virtual Lauti
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Cliente> clientes = FXCollections.observableArrayList();

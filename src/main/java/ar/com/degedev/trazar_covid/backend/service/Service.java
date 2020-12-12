@@ -10,4 +10,6 @@ import lombok.Setter;
 public abstract class Service {
     private ExpressionChecker expressionChecker;
     private ServiceSubscriber serviceSubscriber;
+
+    public abstract void searchComercios() throws Exception;
 }
