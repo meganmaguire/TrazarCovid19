@@ -197,11 +197,11 @@ public class VentanaPrincipalController {
         tablaListadoClientes.setItems(this.clientes);
 
         // Tabla Clientes
-        apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
-        nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
+        apellidoListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApellido()));
+        nombreListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
         dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
-        dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
-        telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
+        dirListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
+        telListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
     }
 
     @FXML
