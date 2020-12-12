@@ -1,11 +1,8 @@
 package ar.com.degedev.trazar_covid.frontend;
 
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
-import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.User;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -14,17 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-    private final ObservableList<Cliente> clientes = FXCollections.observableArrayList();
-
-    public Main() {
-        clientes.add(new Cliente(39490591, "Megan", "Maguire", "Av. Ejército de los Andes 569", "2664828390"));
-        clientes.add(new Cliente(39381308, "Franco", "Merenda", "Av. Ejército de los Andes 569", "260339838"));
-    }
-
-    public ObservableList<Cliente> getClientes() {
-        return clientes;
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
