@@ -1,6 +1,7 @@
 package ar.com.degedev.trazar_covid.frontend;
 
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
+import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.view.VentanaPrincipalController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
