@@ -9,6 +9,7 @@ import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.val;
@@ -17,7 +18,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class VentanaPrincipalController {
-
 
     @FXML
     private ComboBox<Comercio> comercioListaDesplegable;
@@ -135,6 +135,7 @@ public class VentanaPrincipalController {
 
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
+    private ObservableList comercios;
 
     @FXML
     private void cleanFields() {
@@ -177,6 +178,11 @@ public class VentanaPrincipalController {
     @FXML
     private void initialize() {
         this.comercioAPI = ApplicationCtx.getInstance().getAPIs().getComercioAPI();
+        try {
+            this.comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
         nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
         dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
@@ -191,13 +197,9 @@ public class VentanaPrincipalController {
     }
 
     public void setComboBox(ComboBox<Comercio> combobox) {
-        try{
-            val comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
-            combobox.setItems(comercios);
-            combobox.getSelectionModel().selectFirst();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        combobox.setItems(comercios);
+        combobox.getSelectionModel().selectFirst();
+
     }
 
     public void setComboBoxClientes() {
