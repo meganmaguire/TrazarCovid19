@@ -2,12 +2,14 @@ package ar.com.degedev.trazar_covid.frontend.view;
 
 import ar.com.degedev.trazar_covid.backend.api.ClienteAPI;
 import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
+import ar.com.degedev.trazar_covid.backend.api.RegistroAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
 import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
+import com.google.gson.Gson;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -137,6 +139,7 @@ public class VentanaPrincipalController {
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
     private ClienteAPI clientesAPI;
+    private RegistroAPI registroAPI;
 
     private ObservableList<Comercio> comercios;
     private ObservableList<Cliente> clientes;
@@ -165,9 +168,14 @@ public class VentanaPrincipalController {
 
             Comercio comercio = this.comercioListaDesplegable.getValue();
 
-            Registro nuevoRegistro = new Registro(cliente, comercio, LocalDateTime.now());
+            Registro nuevoRegistro = new Registro(0,cliente, comercio, LocalDateTime.now());
 
-            System.out.println(nuevoRegistro.toString());
+            val variableDelLauti = this.registroAPI.altaRegistro(nuevoRegistro).execute();
+
+
+            System.out.println(new Gson().toJson(nuevoRegistro));
+
+            System.out.println("");
         } catch (Exception e) {
             System.out.println("Algo esta roto pibe");
         }
@@ -180,6 +188,7 @@ public class VentanaPrincipalController {
         val apis = ApplicationCtx.getInstance().getAPIs();
         this.comercioAPI = apis.getComercioAPI();
         this.clientesAPI = apis.getClienteAPI();
+        this.registroAPI = apis.getRegistroAPI();
 
         try {
             this.comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());

@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-         ApplicationCtx.getInstance().getAPIs().login(new User("admin", "admin"));
+         ApplicationCtx.getInstance().getAPIs().login(new User(0,"admin", "admin"));
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("view/VentanaPrincipal.fxml"));
