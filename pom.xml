@@ -54,7 +54,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ar.com.degedev.trazar_covid.Launcher</mainClass>
+                                    <mainClass>ar.com.degedev.trazar_covid.frontend.Launcher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

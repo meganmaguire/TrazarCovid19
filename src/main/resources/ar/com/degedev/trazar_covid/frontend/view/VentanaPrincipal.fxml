@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="500.0" minWidth="685.0" prefHeight="500.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.com.degedev.trazar_covid.view.VentanaPrincipalController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="500.0" minWidth="685.0" prefHeight="500.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.com.degedev.trazar_covid.frontend.view.VentanaPrincipalController">
    <children>
       <TabPane prefHeight="488.0" prefWidth="685.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>

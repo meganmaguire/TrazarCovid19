@@ -1,22 +1,20 @@
-package ar.com.degedev.trazar_covid.view;
+package ar.com.degedev.trazar_covid.frontend.view;
 
-import ar.com.degedev.trazar_covid.Main;
-import ar.com.degedev.trazar_covid.model.Cliente;
-import ar.com.degedev.trazar_covid.model.Comercio;
-import ar.com.degedev.trazar_covid.model.Registro;
+import ar.com.degedev.trazar_covid.backend.util.CustomAlert;
+import ar.com.degedev.trazar_covid.frontend.Main;
+import ar.com.degedev.trazar_covid.frontend.model.Cliente;
+import ar.com.degedev.trazar_covid.frontend.model.Comercio;
+import ar.com.degedev.trazar_covid.frontend.model.Registro;
+import ar.com.degedev.trazar_covid.frontend.service_subscriber.ComercioServiceSubscriber;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class VentanaPrincipalController {
+public class VentanaPrincipalController implements ComercioServiceSubscriber {
 
     @FXML
     private Button enviarRegistro;
@@ -125,6 +123,22 @@ public class VentanaPrincipalController {
         this.main = main;
 
         tablaListadoClientes.setItems(main.getClientes());
+    }
+
+    @Override
+    public void showComercio(Comercio comercio) {
+        new CustomAlert(Alert.AlertType.INFORMATION, "Comercio seleccionado", "Informacion:\n\n" +
+                "id: " + comercio.getId()+"\nCUIT: "+comercio.getCUIT()+"\nnombre: "+comercio.getNombre()+
+                "\ndirección: "+comercio.getDireccion()+"\ntelefono: "+comercio.getTelefono());
+    }
+
+    protected void loadComercioListaDesplegable(List data) {
+        comercioListaDesplegable.setItems(null);
+    }
+
+    @Override
+    public void showComercios(List<Comercio> comercios) {
+
     }
 }
 

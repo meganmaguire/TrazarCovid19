@@ -1,4 +1,4 @@
-package ar.com.degedev.trazar_covid.model;
+package ar.com.degedev.trazar_covid.frontend.model;
 
 
 
