@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Cliente {
 
-    private Integer DNI;
+    private Integer dni;
 
     private String nombre;
     private String apellido;
