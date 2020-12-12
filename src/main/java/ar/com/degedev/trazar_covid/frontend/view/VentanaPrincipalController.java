@@ -10,65 +10,127 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class VentanaPrincipalController implements ComercioServiceSubscriber {
 
-    @FXML
-    private Button enviarRegistro;
 
-    @FXML
-    private ComboBox<String> comercioListaDesplegable;
+        @FXML
+        private ComboBox<Comercio> comercioListaDesplegable;
 
-    @FXML
-    private Tab listadoClientesTab;
+        @FXML
+        private TableColumn<Comercio, String> dirListadoComercios;
 
-    @FXML
-    private TextField direccionCliente;
+        @FXML
+        private DatePicker hastaComerciosPorCliente;
 
-    @FXML
-    private TableColumn<Cliente, String> nombreListadoClientes;
+        @FXML
+        private TextField direccionCliente;
 
-    @FXML
-    private TextField dniCliente;
+        @FXML
+        private DatePicker desdeClientesPorComercio;
 
-    @FXML
-    private TableColumn<Cliente, String>dirListadoClientes;
+        @FXML
+        private TableColumn<Cliente, String> dirListadoClientes;
 
-    @FXML
-    private TableColumn<Cliente, String> telListadoClientes;
+        @FXML
+        private TableColumn<Cliente, Integer> dniListadoClientes;
 
-    @FXML
-    private TableColumn<Cliente, Integer> dniListadoClientes;
+        @FXML
+        private TableColumn<Comercio, String> telListadoComercios;
 
-    @FXML
-    private Tab nuevoRegistroTab;
+        @FXML
+        private TableColumn<Cliente, String> telClientesPorComercio;
 
-    @FXML
-    private TextField nombreCliente;
+        @FXML
+        private TextField nombreCliente;
 
-    @FXML
-    private TextField telCliente;
+        @FXML
+        private TextField dniComerciosPorCliente;
 
-    @FXML
-    private Button limpiarRegistro;
+        @FXML
+        private TextField telCliente;
 
-    @FXML
-    private TextField apellidoCliente;
+        @FXML
+        private Button limpiarRegistro;
 
-    @FXML
-    private TableView<Cliente> tablaListadoClientes;
+        @FXML
+        private TableView<Cliente> tablaListadoClientes;
 
-    @FXML
-    private TableView<?> tablaConsulta2;
+        @FXML
+        private TableColumn<Comercio, Integer> idListadoComercios;
 
-    @FXML
-    private TableView<?> tablaConsulta1;
+        @FXML
+        private DatePicker desdeComerciosPorCliente;
 
-    @FXML
-    private TableColumn<Cliente, String> apellidoListadoClientes;
+        @FXML
+        private DatePicker hastaClientesPorComercio;
+
+        @FXML
+        private TableColumn<Cliente, String> apellidoListadoClientes;
+
+        @FXML
+        private Tab clientesSegunFechaTab;
+
+        @FXML
+        private Button enviarRegistro;
+
+        @FXML
+        private Tab listadoClientesTab;
+
+        @FXML
+        private TableColumn<Comercio, String> nombreListadoComercios;
+
+        @FXML
+        private TableColumn<Comercio, Long> cuitListadoComercios;
+
+        @FXML
+        private TableColumn<Cliente, String> nombreListadoClientes;
+
+        @FXML
+        private TableColumn<Comercio, String> nombreClientesPorComercio;
+
+        @FXML
+        private TextField dniCliente;
+
+        @FXML
+        private ComboBox<Comercio> comercioListaDesplegableConsulta;
+
+        @FXML
+        private Button buscarComercios;
+
+        @FXML
+        private TableColumn<Cliente, String> telListadoClientes;
+
+        @FXML
+        private TableColumn<Cliente, String> apellidoClientesPorComercio;
+
+        @FXML
+        private Tab nuevoRegistroTab;
+
+        @FXML
+        private TableColumn<Cliente, String> dirClientesPorComercio;
+
+        @FXML
+        private TextField apellidoCliente;
+
+        @FXML
+        private Tab comerciosSegunFechaTab;
+
+        @FXML
+        private Button buscarClientes;
+
+        @FXML
+        private TableView<Comercio> tablaConsultaComercioPorCliente;
+
+        @FXML
+        private TableView<Cliente> tablaConsultaClientePorComercio;
+
+        @FXML
+        private TableColumn<Cliente, Comercio> dniClientesPorComercio;
 
     @FXML
     private void cleanFields() {
@@ -119,10 +181,43 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
     }
 
-    public void setMain(Main main){
+    public void setListadoClientes(Main main){
         this.main = main;
 
         tablaListadoClientes.setItems(main.getClientes());
+    }
+
+    public void setComboBox(ComboBox combobox,Main main){
+        combobox.setConverter(new StringConverter<Comercio>() {
+            @Override
+            public String toString(Comercio comercio) {
+                return comercio.getNombre();
+            }
+
+            @Override
+            public Comercio fromString(String string) {
+                return null;
+            }
+        });
+        combobox.setItems(main.getComercios());
+        combobox.getSelectionModel().selectFirst();
+    }
+    public void setComboBoxClientes(Main main){
+
+        setComboBox(comercioListaDesplegable,main);
+    }
+
+    public void setComboBoxClientesPorComercio(Main main) {
+
+        setComboBox(comercioListaDesplegableConsulta,main);
+    }
+
+    @FXML
+    public void buscarPersonaPorComercio(){
+
+        Comercio comercio = comercioListaDesplegableConsulta.getValue();
+
+
     }
 
     @Override
