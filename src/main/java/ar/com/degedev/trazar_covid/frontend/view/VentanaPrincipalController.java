@@ -3,7 +3,6 @@ package ar.com.degedev.trazar_covid.frontend.view;
 import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
-import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
@@ -12,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import lombok.val;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -135,7 +133,8 @@ public class VentanaPrincipalController {
 
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
-    private ObservableList comercios;
+
+    private ObservableList<Comercio> comercios;
 
     @FXML
     private void cleanFields() {
@@ -171,10 +170,6 @@ public class VentanaPrincipalController {
     }
 
 
-    public VentanaPrincipalController() {
-
-    }
-
     @FXML
     private void initialize() {
         this.comercioAPI = ApplicationCtx.getInstance().getAPIs().getComercioAPI();
@@ -183,38 +178,17 @@ public class VentanaPrincipalController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        comercioListaDesplegable.setItems(this.comercios);
         apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
         nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
         dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
         dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
-
-    }
-
-    public void setListadoClientes(Main main) {
-
-        tablaListadoClientes.setItems(main.getClientes());
-    }
-
-    public void setComboBox(ComboBox<Comercio> combobox) {
-        combobox.setItems(comercios);
-        combobox.getSelectionModel().selectFirst();
-
-    }
-
-    public void setComboBoxClientes() {
-
-        setComboBox(comercioListaDesplegable);
-    }
-
-    public void setComboBoxClientesPorComercio() {
-        setComboBox(comercioListaDesplegableConsulta);
     }
 
     @FXML
     public void buscarPersonaPorComercio() {
         Comercio comercio = comercioListaDesplegableConsulta.getValue();
     }
-
 }
 
