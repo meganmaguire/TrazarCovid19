@@ -3,6 +3,7 @@ package ar.com.degedev.trazar_covid.frontend.view;
 import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
+import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
@@ -11,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import lombok.val;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -133,7 +135,6 @@ public class VentanaPrincipalController {
 
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
-
     private ObservableList<Comercio> comercios;
 
     @FXML
@@ -143,7 +144,7 @@ public class VentanaPrincipalController {
         dniCliente.setText("");
         direccionCliente.setText("");
         telCliente.setText("");
-        comercioListaDesplegable.getSelectionModel().clearSelection();
+        comercioListaDesplegable.getSelectionModel().selectFirst();
         comercioListaDesplegable.setValue(null);
     }
 
@@ -157,8 +158,8 @@ public class VentanaPrincipalController {
             String telefono = telCliente.getText();
 
             Cliente cliente = new Cliente(dni, nombre, apellido, direccion, telefono);
-            // ToDo get comercio from data base.
-            Comercio comercio = new Comercio();
+
+            Comercio comercio = this.comercioListaDesplegable.getValue();
 
             Registro nuevoRegistro = new Registro(cliente, comercio, LocalDateTime.now());
 
@@ -179,6 +180,9 @@ public class VentanaPrincipalController {
             e.printStackTrace();
         }
         comercioListaDesplegable.setItems(this.comercios);
+        comercioListaDesplegable.getSelectionModel().selectFirst();
+        comercioListaDesplegableConsulta.setItems(this.comercios);
+        comercioListaDesplegableConsulta.getSelectionModel().selectFirst();
         apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
         nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
         dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
