@@ -181,6 +181,12 @@ public class VentanaPrincipalController {
         dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 
+        apellidoClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
+        nombreClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
+        dniClientesPorComercio.setCellValueFactory(cellData -> (ObservableValue) new SimpleIntegerProperty(cellData.getValue().getDNI()));
+        dirClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
+        telClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
+
     }
 
     public void setListadoClientes(Main main){
@@ -230,11 +236,6 @@ public class VentanaPrincipalController {
             clientes.add(new Cliente(39490591, "Megan", "Maguire", "Av. Ejército de los Andes 569", "2664828390"));
             clientes.add(new Cliente(39381308, "Franco", "Merenda", "Av. Ejército de los Andes 569", "260339838"));
 
-            apellidoClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
-            nombreClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
-            dniClientesPorComercio.setCellValueFactory(cellData -> (ObservableValue) new SimpleIntegerProperty(cellData.getValue().getDNI()));
-            dirClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
-            telClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 
             tablaConsultaClientePorComercio.setItems(clientes);
         }
