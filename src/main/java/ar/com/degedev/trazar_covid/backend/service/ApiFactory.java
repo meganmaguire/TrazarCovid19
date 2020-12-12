@@ -15,11 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 
 public class ApiFactory {
-    private static final String BASE_URL = "http://http://34.74.103.67/";
+    private static final String BASE_URL = "http://localhost:8080/";
 
-    private final Gson gson;
     private final Retrofit retrofit;
-    private final OkHttpClient httpClient;
 
     private ClienteAPI clienteAPI;
     private ComercioAPI comercioAPI;
@@ -27,8 +25,8 @@ public class ApiFactory {
     private UserAPI userAPI;
 
     public ApiFactory() {
-        this.gson = new GsonBuilder().setLenient().create();
-        this.httpClient = new OkHttpClient.Builder()
+        Gson gson = new GsonBuilder().setLenient().create();
+        OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     val original = chain.request();
                     val request = original.newBuilder()
@@ -41,7 +39,7 @@ public class ApiFactory {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(this.httpClient)
+                .client(httpClient)
                 .build();
     }
 

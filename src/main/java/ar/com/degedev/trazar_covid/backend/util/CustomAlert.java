@@ -79,7 +79,7 @@ public class CustomAlert extends Alert {
 
     public Optional<ButtonType> customShow() {
         build();
-        Optional<ButtonType> ret = null;
+        Optional<ButtonType> ret = Optional.empty();
         ((Stage) this.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 
         if (this.getAlertType() != AlertType.NONE) {

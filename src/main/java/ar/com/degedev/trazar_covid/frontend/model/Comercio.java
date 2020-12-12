@@ -27,7 +27,8 @@ public class Comercio {
 
     }
 
-    public String toString(Comercio comercio){
-        return comercio.nombre;
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 }

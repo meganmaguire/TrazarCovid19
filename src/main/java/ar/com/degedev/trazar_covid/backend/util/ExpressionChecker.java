@@ -111,9 +111,9 @@ public class ExpressionChecker
         boolean ret;
 
         if(allowEmpty)
-            pattern = Pattern.compile("[a-zA-Z]*[\\s[a-zA-Z]]*");
+            pattern = Pattern.compile("[a-zA-Z]*[\\sa-zA-Z]*");
         else
-            pattern = Pattern.compile("[a-zA-Z]+[\\s[a-zA-Z]]*");
+            pattern = Pattern.compile("[a-zA-Z]+[\\sa-zA-Z]*");
 
         ret = pattern.matcher(string).matches();
 

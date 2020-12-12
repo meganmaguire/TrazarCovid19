@@ -10,7 +10,7 @@ public class ApplicationCtx {
     private String authToken = "";
 
     @Getter
-    private ApiFactory APIs;
+    private final ApiFactory APIs;
 
     private static ApplicationCtx instance;
 
