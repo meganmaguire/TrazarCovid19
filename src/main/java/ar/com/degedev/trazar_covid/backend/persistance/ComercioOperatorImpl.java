@@ -95,13 +95,14 @@ public class ComercioOperatorImpl implements ComercioOperator {
                             @Override
                             public void onResponse(Call<List<Comercio>> call, Response<List<Comercio>> response)
                             {
-
+                                System.out.println("A");
                                 if(response.isSuccessful())
                                 {
                                     ((ComercioServiceSubscriber)comercioService.getServiceSubscriber()).showComercios(response.body());
                                 }
                                 else
                                 {
+                                    System.out.println("F");
                                     comercioService.getServiceSubscriber().showError("Cannot obtain a users list", response.errorBody().toString(), new Exception("Error response"));
                                 }
                             };

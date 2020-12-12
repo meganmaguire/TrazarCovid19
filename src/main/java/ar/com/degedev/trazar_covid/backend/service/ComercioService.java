@@ -4,6 +4,7 @@ import ar.com.degedev.trazar_covid.backend.interfaz.ComercioOperator;
 import ar.com.degedev.trazar_covid.backend.persistance.ComercioOperatorImpl;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.service_subscriber.ComercioServiceSubscriber;
+import ar.com.degedev.trazar_covid.frontend.service_subscriber.ServiceSubscriber;
 import javafx.concurrent.Task;
 
 import java.util.List;
@@ -46,4 +47,8 @@ public class ComercioService extends Service{
         executorService.execute(task);
     }
 
+    @Override
+    public void setServiceSubscriber(ServiceSubscriber serviceSubscriber) {
+        super.setServiceSubscriber(serviceSubscriber);
+    }
 }

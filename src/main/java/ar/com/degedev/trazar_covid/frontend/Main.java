@@ -1,5 +1,8 @@
 package ar.com.degedev.trazar_covid.frontend;
 
+import ar.com.degedev.trazar_covid.backend.service.ComercioService;
+import ar.com.degedev.trazar_covid.backend.service.Service;
+import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.view.VentanaPrincipalController;
@@ -13,10 +16,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main extends Application {
 
-    public static final String API_HOSTNAME = "34.74.103.67"; // Maquina Virtual Lauti
+    public static final String API_HOSTNAME = "http://34.74.103.67"; // Maquina Virtual Lauti
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -84,6 +89,15 @@ public class Main extends Application {
             controller.setListadoClientes(this);
             controller.setComboBoxClientes(this);
             controller.setComboBoxClientesPorComercio(this);
+
+            List<Service> services = new LinkedList<>();
+
+            Service comercioService = new ComercioService();
+            comercioService.setServiceSubscriber(controller);
+            comercioService.setExpressionChecker(ExpressionChecker.getExpressionChecker());
+
+            services.add(comercioService);
+            controller.setServices(services);
         }
         catch (IOException e){
 

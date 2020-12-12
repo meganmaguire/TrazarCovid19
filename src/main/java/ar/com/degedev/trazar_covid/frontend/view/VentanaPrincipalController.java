@@ -9,8 +9,10 @@ import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
 import ar.com.degedev.trazar_covid.frontend.service_subscriber.ComercioServiceSubscriber;
+import ar.com.degedev.trazar_covid.frontend.service_subscriber.ServiceSubscriber;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
@@ -18,7 +20,7 @@ import javafx.util.StringConverter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class VentanaPrincipalController implements ComercioServiceSubscriber {
+public class VentanaPrincipalController implements ServiceSubscriber {
 
 
         @FXML
@@ -186,20 +188,63 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
         dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
         telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 
-        try {
-
-            this.services.get(0).searchComercios();
-        } catch (Exception exception) {
-
-            System.out.println("No exploto solo no tiene los sericios cargados\nTenga un buen dia");
-            exception.printStackTrace();
-        }
     }
 
     public void setListadoClientes(Main main){
         this.main = main;
 
         tablaListadoClientes.setItems(main.getClientes());
+    }
+
+    public void setServices(List<Service>services) {
+        this.services = services;
+
+        try {
+            this.services.get(0).searchComercios();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    @Override
+    public Service getService(int location) {
+        return null;
+    }
+
+    public int addService(Service service)
+    {
+        this.services.add(service);
+        return this.services.size()-1;
+    }
+
+    @Override
+    public CustomAlert showProcessIsWorking(String message) {
+        return null;
+    }
+
+    @Override
+    public void closeProcessIsWorking(CustomAlert customAlert) {
+
+    }
+
+    @Override
+    public void showSucces(String message) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void showError(String message, String description, Exception exception) {
+
+    }
+
+    @Override
+    public void showNoResult(String message) {
+
     }
 
     public void setComboBox(ComboBox combobox,Main main){
@@ -235,7 +280,7 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
 
     }
 
-    @Override
+    //@Override
     public void showComercio(Comercio comercio) {
         new CustomAlert(Alert.AlertType.INFORMATION, "Comercio seleccionado", "Informacion:\n\n" +
                 "id: " + comercio.getId()+"\nCUIT: "+comercio.getCUIT()+"\nnombre: "+comercio.getNombre()+
@@ -243,10 +288,10 @@ public class VentanaPrincipalController implements ComercioServiceSubscriber {
     }
 
     protected void loadComercioListaDesplegable(List data) {
-        comercioListaDesplegable.setItems(null);
+        comercioListaDesplegable.setItems(FXCollections.observableArrayList(data));
     }
 
-    @Override
+    //@Override
     public void showComercios(List<Comercio> comercios) {
         this.loadComercioListaDesplegable(comercios);
     }
