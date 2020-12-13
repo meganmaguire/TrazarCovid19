@@ -185,20 +185,32 @@ public class VentanaPrincipalController {
     private ObservableList<Cliente> clientes;
 
     @FXML
-    private void limpiar() {
-        cleanFields(true);
+    private void limpiarRegistro() {
+        cleanFields(true, true);
     }
 
-    private void cleanFields(boolean borrarDni) {
-        this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
-        this.buscarPorDni.setTooltip(null);
-        this.nombreCliente.setText("");
-        this.apellidoCliente.setText("");
-        this.direccionCliente.setText("");
-        this.telCliente.setText("");
+    @FXML
+    private void limpiarComercio() {
+        cleanFields(false, false);
+    }
 
-        if(borrarDni) {
-            this.dniCliente.setText("");
+    private void cleanFields(boolean borrarDni, boolean registro) {
+        if (registro){
+            this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
+            this.buscarPorDni.setTooltip(null);
+            this.nombreCliente.setText("");
+            this.apellidoCliente.setText("");
+            this.direccionCliente.setText("");
+            this.telCliente.setText("");
+
+            if (borrarDni) {
+                this.dniCliente.setText("");
+            }
+        } else {
+            this.cuitComercio.setText("");
+            this.nombreComercio.setText("");
+            this.direccionComercio.setText("");
+            this.telComercio.setText("");
         }
     }
 
@@ -221,7 +233,7 @@ public class VentanaPrincipalController {
                 this.clientes.add(cliente);
             }
 
-            cleanFields(true);
+            cleanFields(true, true);
 
             this.registroAPI.altaRegistro(nuevoRegistro).execute();
 
@@ -230,6 +242,25 @@ public class VentanaPrincipalController {
             // Un to-do seria buscar esta excepcion mas adentro
         }
 
+    }
+
+    @FXML
+    private void createComercio() {
+        try {
+            Long cuit = Long.valueOf(this.cuitComercio.getText());
+            String nombre = this.nombreComercio.getText();
+            String direccion = this.direccionComercio.getText();
+            String telefono = this.telComercio.getText();
+
+            Comercio nuevoComercio = new Comercio(0, cuit, nombre, direccion, telefono);
+
+            this.comercioAPI.altaComercio(nuevoComercio).execute();
+
+            this.comercios.add(nuevoComercio);
+
+            cleanFields(false, false);
+
+        } catch (Exception ignored){}
     }
 
 
@@ -342,12 +373,12 @@ public class VentanaPrincipalController {
                     this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
                 }
             } catch (IOException e) {
-                cleanFields(false);
+                cleanFields(false, true);
                 this.buscarPorDni.setStyle("-fx-text-fill: red");
                 this.buscarPorDni.setTooltip(new Tooltip("No se encontraron resultados"));
             }
         } else {
-            cleanFields(true);
+            cleanFields(true, true);
             dniCliente.setText("");
         }
     }

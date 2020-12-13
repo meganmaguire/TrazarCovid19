@@ -19,7 +19,7 @@
                         </Label>
                         <HBox layoutX="435.0" layoutY="407.0" prefHeight="26.0" prefWidth="226.0" spacing="15.0" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="59.0">
                            <children>
-                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
+                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#limpiarRegistro" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
                               <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" onAction="#createRegistro" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
@@ -92,8 +92,8 @@
                         </GridPane>
                         <HBox layoutX="435.0" layoutY="407.0" prefHeight="26.0" prefWidth="226.0" spacing="15.0">
                            <children>
-                              <Button fx:id="limpiarComercio" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
-                              <Button fx:id="enviarComercio" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="limpiarComercio" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#limpiarComercio" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
+                              <Button fx:id="enviarComercio" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" onAction="#createComercio" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <Label layoutX="282.0" layoutY="35.0" prefHeight="26.0" prefWidth="212.0" text="Nuevo Comercio" textAlignment="CENTER">
