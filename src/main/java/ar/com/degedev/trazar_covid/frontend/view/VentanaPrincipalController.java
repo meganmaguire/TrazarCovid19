@@ -155,6 +155,24 @@ public class VentanaPrincipalController {
     @FXML
     private TextField horaDesdeClientesPorComercio;
 
+    @FXML
+    private TextField cuitComercio;
+
+    @FXML
+    private TextField nombreComercio;
+
+    @FXML
+    private TextField direccionComercio;
+
+    @FXML
+    private TextField telComercio;
+
+    @FXML
+    private Button limpiarComercio;
+
+    @FXML
+    private Button enviarComercio;
+
 
 
     private ExpressionChecker expressionChecker;
