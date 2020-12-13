@@ -140,6 +140,20 @@ public class VentanaPrincipalController {
     @FXML
     private TableColumn<Cliente, Integer> dniClientesPorComercio;
 
+    @FXML
+    private TextField horaHastaComerciosPorCliente;
+
+    @FXML
+    private TextField horaDesdeComerciosPorCliente;
+
+    @FXML
+    private TextField horaHastaClientesPorComercio;
+
+    @FXML
+    private TextField horaDesdeClientesPorComercio;
+
+
+
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
     private ClienteAPI clientesAPI;
