@@ -1,34 +1,21 @@
 package ar.com.degedev.trazar_covid.frontend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Comercio {
 
-    private Integer Id;
+    private Integer id;
 
-    private Long CUIT;
+    private Long cuit;
     private String nombre;
     private String direccion;
     private String telefono;
 
-    public Comercio(){
-
-    }
-
-    public Comercio(Long CUIT, String nombre, String direccion, String telefono){
-        // TODO hardcodeado, sacar
-        this.Id = 1;
-
-        this.CUIT = CUIT;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-
-    }
-
     @Override
-    public String toString(){
+    public String toString() {
         return this.nombre;
     }
 }

@@ -1,12 +1,13 @@
 package ar.com.degedev.trazar_covid.backend.service;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 public class ApplicationCtx {
 
-    @Getter
-    @Setter
+    @Setter(AccessLevel.PACKAGE)
+    @Getter(AccessLevel.PACKAGE)
     private String authToken = "";
 
     @Getter

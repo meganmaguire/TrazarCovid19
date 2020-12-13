@@ -1,9 +1,10 @@
 package ar.com.degedev.trazar_covid.frontend.view;
 
+import ar.com.degedev.trazar_covid.backend.api.ClienteAPI;
 import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
+import ar.com.degedev.trazar_covid.backend.api.RegistroAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
-import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
@@ -17,10 +18,10 @@ import javafx.scene.control.*;
 import lombok.val;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 public class VentanaPrincipalController {
-
 
     @FXML
     private ComboBox<Comercio> comercioListaDesplegable;
@@ -128,26 +129,42 @@ public class VentanaPrincipalController {
     private Button buscarClientes;
 
     @FXML
+    private Button buscarPorDni;
+
+    @FXML
     private TableView<Comercio> tablaConsultaComercioPorCliente;
 
     @FXML
     private TableView<Cliente> tablaConsultaClientePorComercio;
 
     @FXML
-    private TableColumn<Cliente, Comercio> dniClientesPorComercio;
+    private TableColumn<Cliente, Integer> dniClientesPorComercio;
 
     private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
+    private ClienteAPI clientesAPI;
+    private RegistroAPI registroAPI;
+    private Cliente cliente;
+
+    private ObservableList<Comercio> comercios;
+    private ObservableList<Cliente> clientes;
 
     @FXML
-    private void cleanFields() {
+    private void limpiar() {
+        cleanFields(false);
+    }
+
+    private void cleanFields(boolean createdRegistro) {
+        buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
         nombreCliente.setText("");
         apellidoCliente.setText("");
         dniCliente.setText("");
         direccionCliente.setText("");
         telCliente.setText("");
-        comercioListaDesplegable.getSelectionModel().clearSelection();
-        comercioListaDesplegable.setValue(null);
+
+        if(!createdRegistro) {
+            comercioListaDesplegable.getSelectionModel().selectFirst();
+        }
     }
 
     @FXML
@@ -160,63 +177,66 @@ public class VentanaPrincipalController {
             String telefono = telCliente.getText();
 
             Cliente cliente = new Cliente(dni, nombre, apellido, direccion, telefono);
-            // ToDo get comercio from data base.
-            Comercio comercio = new Comercio();
 
-            Registro nuevoRegistro = new Registro(cliente, comercio, LocalDateTime.now());
+            Comercio comercio = this.comercioListaDesplegable.getValue();
 
-            System.out.println(nuevoRegistro.toString());
-        } catch (Exception e) {
-            System.out.println("Algo esta roto pibe");
+            Registro nuevoRegistro = new Registro(0,cliente, comercio, LocalDateTime.now());
+
+            if (!this.clientes.contains(cliente)) {
+                this.clientes.add(cliente);
+            }
+
+            cleanFields(true);
+
+            this.registroAPI.altaRegistro(nuevoRegistro).execute();
+
+        } catch (Exception ignored) {
+            // GSon lanza una excepcion que es necesaria para el correcto funcionamiento de la aplicacion
+            // Un to-do seria buscar esta excepcion mas adentro
         }
 
     }
 
-
-    public VentanaPrincipalController() {
-
-    }
 
     @FXML
     private void initialize() {
+        val apis = ApplicationCtx.getInstance().getAPIs();
+        this.comercioAPI = apis.getComercioAPI();
+        this.clientesAPI = apis.getClienteAPI();
+        this.registroAPI = apis.getRegistroAPI();
         this.comercioAPI = ApplicationCtx.getInstance().getAPIs().getComercioAPI();
-        apellidoListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
-        nombreListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
-        dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDNI()));
-        dirListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
-        telListadoClientes.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
-
-        apellidoClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getApellidoProperty());
-        nombreClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getNombreProperty());
-        dniClientesPorComercio.setCellValueFactory(cellData -> (ObservableValue) new SimpleIntegerProperty(cellData.getValue().getDNI()));
-        dirClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getDireccionProperty());
-        telClientesPorComercio.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 
 
-    }
 
-    public void setListadoClientes(Main main) {
 
-        tablaListadoClientes.setItems(main.getClientes());
-    }
-
-    public void setComboBox(ComboBox<Comercio> combobox) {
-        try{
-            val comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
-            combobox.setItems(comercios);
-            combobox.getSelectionModel().selectFirst();
-        } catch (IOException e){
+        try {
+            this.comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
+            this.clientes = FXCollections.observableArrayList(this.clientesAPI.listarClientes().execute().body());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void setComboBoxClientes() {
+        // ComboBox
+        comercioListaDesplegable.setItems(this.comercios);
+        comercioListaDesplegable.getSelectionModel().selectFirst();
+        comercioListaDesplegableConsulta.setItems(this.comercios);
+        comercioListaDesplegableConsulta.getSelectionModel().selectFirst();
+        comercioListaDesplegable.getSelectionModel().selectFirst();
+        tablaListadoClientes.setItems(this.clientes);
 
-        setComboBox(comercioListaDesplegable);
-    }
+        // Tabla Clientes
+        apellidoListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApellido()));
+        nombreListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
+        dniListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDni()));
+        dirListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
+        telListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
 
-    public void setComboBoxClientesPorComercio() {
-        setComboBox(comercioListaDesplegableConsulta);
+        // Tabla Consulta Clientes por Comercio
+        apellidoClientesPorComercio.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApellido()));
+        nombreClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
+        dniClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDni()));
+        dirClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
+        telClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
     }
 
     @FXML
@@ -241,6 +261,25 @@ public class VentanaPrincipalController {
         catch (Exception e){
             System.out.println("Problema de control de datos");
             e.printStackTrace();
+        }
+    }
+    @FXML
+    public void buscarPersonaPorDni() {
+        String clienteDni = dniCliente.getText();
+        if (ExpressionChecker.getExpressionChecker().onlyNumbers(clienteDni, false)) {
+            try {
+                this.cliente = this.clientesAPI.clientePorDNI(Integer.valueOf(clienteDni)).execute().body();
+                if (this.cliente != null) {
+                    nombreCliente.setText(this.cliente.getNombre());
+                    apellidoCliente.setText(this.cliente.getApellido());
+                    direccionCliente.setText(this.cliente.getDireccion());
+                    telCliente.setText(this.cliente.getTelefono());
+                }
+            } catch (IOException e) {
+                this.buscarPorDni.setStyle("-fx-text-fill: red");
+            }
+        } else {
+            dniCliente.setText("Ingrese solo números");
         }
     }
 }

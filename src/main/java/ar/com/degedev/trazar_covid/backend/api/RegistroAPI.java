@@ -23,6 +23,6 @@ public interface RegistroAPI {
             @Query("fin") LocalDateTime fin
     );
 
-    @POST("registro/alta")
+    @POST("registro")
     Call<Registro> altaRegistro(@Body Registro registro);
 }
