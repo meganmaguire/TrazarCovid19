@@ -174,8 +174,6 @@ public class VentanaPrincipalController {
 
 
             System.out.println(new Gson().toJson(nuevoRegistro));
-
-            System.out.println("");
         } catch (Exception e) {
             System.out.println("Algo esta roto pibe");
         }

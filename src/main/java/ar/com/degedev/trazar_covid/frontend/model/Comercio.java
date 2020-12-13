@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Comercio {
 
-    private Integer Id;
+    private Integer id;
 
     private Long cuit;
     private String nombre;
