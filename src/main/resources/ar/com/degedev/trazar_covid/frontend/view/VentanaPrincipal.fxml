@@ -30,12 +30,12 @@
                         </HBox>
                         <GridPane hgap="15.0" layoutX="172.0" layoutY="85.0" prefHeight="263.0" prefWidth="341.0" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="172.0">
                            <children>
-                              <Label text="Nombre " GridPane.rowIndex="2" />
-                              <TextField fx:id="nombreCliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Apellido" GridPane.rowIndex="1" />
-                              <TextField fx:id="apellidoCliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="DNI" />
                               <TextField fx:id="dniCliente" GridPane.columnIndex="1" />
+                              <Label text="Apellido" GridPane.rowIndex="1" />
+                              <TextField fx:id="apellidoCliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Nombre " GridPane.rowIndex="2" />
+                              <TextField fx:id="nombreCliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Direccion" GridPane.rowIndex="3" />
                               <TextField fx:id="direccionCliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Telefono" GridPane.rowIndex="4" />
