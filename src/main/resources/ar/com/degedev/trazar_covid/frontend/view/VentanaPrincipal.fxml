@@ -12,6 +12,11 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="483.0" prefWidth="685.0">
                      <children>
+                        <Pane layoutX="534.0" layoutY="8.0" prefHeight="332.0" prefWidth="104.0">
+                           <children>
+                              <Button fx:id="buscarPorDni" layoutX="21.0" layoutY="85.0" mnemonicParsing="false" onAction="#buscarPersonaPorDni" text="Buscar" textAlignment="CENTER" />
+                           </children>
+                        </Pane>
                         <Label layoutX="244.0" layoutY="30.0" prefHeight="26.0" prefWidth="198.0" text="Nuevo Registro" textAlignment="CENTER" AnchorPane.leftAnchor="244.0" AnchorPane.rightAnchor="243.0">
                            <font>
                               <Font name="System Bold" size="22.0" />
@@ -19,18 +24,18 @@
                         </Label>
                         <HBox layoutX="401.0" layoutY="407.0" prefHeight="26.0" prefWidth="226.0" spacing="15.0" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="58.0">
                            <children>
-                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#cleanFields" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
+                              <Button fx:id="limpiarRegistro" layoutX="394.0" layoutY="390.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="105.0" text="Limpiar" />
                               <Button fx:id="enviarRegistro" layoutX="528.0" layoutY="390.0" mnemonicParsing="false" onAction="#createRegistro" prefHeight="26.0" prefWidth="105.0" text="Enviar" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <GridPane hgap="15.0" layoutX="172.0" layoutY="85.0" prefHeight="263.0" prefWidth="341.0" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="172.0">
                            <children>
-                              <Label text="Nombre " />
-                              <TextField fx:id="nombreCliente" GridPane.columnIndex="1" />
+                              <Label text="Nombre " GridPane.rowIndex="2" />
+                              <TextField fx:id="nombreCliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Apellido" GridPane.rowIndex="1" />
                               <TextField fx:id="apellidoCliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="DNI" GridPane.rowIndex="2" />
-                              <TextField fx:id="dniCliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="DNI" />
+                              <TextField fx:id="dniCliente" GridPane.columnIndex="1" />
                               <Label text="Direccion" GridPane.rowIndex="3" />
                               <TextField fx:id="direccionCliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Telefono" GridPane.rowIndex="4" />

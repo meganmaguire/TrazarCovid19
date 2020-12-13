@@ -5,7 +5,6 @@ import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
 import ar.com.degedev.trazar_covid.backend.api.RegistroAPI;
 import ar.com.degedev.trazar_covid.backend.service.ApplicationCtx;
 import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
-import ar.com.degedev.trazar_covid.frontend.Main;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
@@ -128,6 +127,9 @@ public class VentanaPrincipalController {
     private Button buscarClientes;
 
     @FXML
+    private Button buscarPorDni;
+
+    @FXML
     private TableView<Comercio> tablaConsultaComercioPorCliente;
 
     @FXML
@@ -140,19 +142,27 @@ public class VentanaPrincipalController {
     private ComercioAPI comercioAPI;
     private ClienteAPI clientesAPI;
     private RegistroAPI registroAPI;
+    private Cliente cliente;
 
     private ObservableList<Comercio> comercios;
     private ObservableList<Cliente> clientes;
 
     @FXML
-    private void cleanFields() {
+    private void limpiar() {
+        cleanFields(false);
+    }
+
+    private void cleanFields(boolean createdRegistro) {
+        this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
         nombreCliente.setText("");
         apellidoCliente.setText("");
         dniCliente.setText("");
         direccionCliente.setText("");
         telCliente.setText("");
-        comercioListaDesplegable.getSelectionModel().selectFirst();
-        comercioListaDesplegable.setValue(null);
+
+        if(!createdRegistro) {
+            comercioListaDesplegable.getSelectionModel().selectFirst();
+        }
     }
 
     @FXML
@@ -170,10 +180,10 @@ public class VentanaPrincipalController {
 
             Registro nuevoRegistro = new Registro(0,cliente, comercio, LocalDateTime.now());
 
-            val variableDelLauti = this.registroAPI.altaRegistro(nuevoRegistro).execute();
+            this.registroAPI.altaRegistro(nuevoRegistro).execute();
 
+            cleanFields(true);
 
-            System.out.println(new Gson().toJson(nuevoRegistro));
         } catch (Exception e) {
             System.out.println("Algo esta roto pibe");
         }
@@ -214,6 +224,26 @@ public class VentanaPrincipalController {
     @FXML
     public void buscarPersonaPorComercio() {
         Comercio comercio = comercioListaDesplegableConsulta.getValue();
+    }
+
+    @FXML
+    public void buscarPersonaPorDni() {
+        String clienteDni = dniCliente.getText();
+        if (ExpressionChecker.getExpressionChecker().onlyNumbers(clienteDni, false)) {
+            try {
+                this.cliente = this.clientesAPI.clientePorDNI(Integer.valueOf(clienteDni)).execute().body();
+                if (this.cliente != null) {
+                    nombreCliente.setText(this.cliente.getNombre());
+                    apellidoCliente.setText(this.cliente.getApellido());
+                    direccionCliente.setText(this.cliente.getDireccion());
+                    telCliente.setText(this.cliente.getTelefono());
+                }
+            } catch (IOException e) {
+                this.buscarPorDni.setStyle("-fx-text-fill: red");
+            }
+        } else {
+            dniCliente.setText("Ingrese solo números");
+        }
     }
 }
 

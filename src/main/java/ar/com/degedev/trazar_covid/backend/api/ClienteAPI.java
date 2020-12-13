@@ -12,6 +12,6 @@ public interface ClienteAPI {
     @GET("cliente")
     Call<List<Cliente>> listarClientes();
 
-    @GET("cliente/{id}")
-    Call<Cliente> clientePorID(@Path("id") Integer id);
+    @GET("cliente/{dni}")
+    Call<Cliente> clientePorDNI(@Path("dni") Integer dni);
 }
