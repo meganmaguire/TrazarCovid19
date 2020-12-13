@@ -6,6 +6,7 @@ import ar.com.degedev.trazar_covid.backend.api.RegistroAPI;
 import ar.com.degedev.trazar_covid.backend.api.UserAPI;
 import ar.com.degedev.trazar_covid.frontend.model.User;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 import lombok.val;
@@ -33,6 +34,11 @@ public class ApiFactory {
                         LocalDateTime.class,
                         (JsonSerializer<LocalDateTime>) (localDateTime, type, ctx) ->
                                 new JsonPrimitive(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
+                .registerTypeAdapter(
+                        LocalDateTime.class,
+                        (JsonDeserializer<LocalDateTime>) (jsonElement, type, ctx) ->
+                                LocalDateTime.parse(jsonElement.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                )
                 .setLenient().create();
         val httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
