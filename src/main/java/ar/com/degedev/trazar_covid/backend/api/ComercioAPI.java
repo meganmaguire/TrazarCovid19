@@ -1,6 +1,6 @@
-package ar.com.degedev.trazar_covid.api;
+package ar.com.degedev.trazar_covid.backend.api;
 
-import ar.com.degedev.trazar_covid.model.Comercio;
+import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 
 import retrofit2.Call;
 import retrofit2.http.*;
