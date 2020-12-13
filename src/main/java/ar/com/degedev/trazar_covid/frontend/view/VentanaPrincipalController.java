@@ -254,6 +254,14 @@ public class VentanaPrincipalController {
         dniClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDni()));
         dirClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
         telClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
+    
+        //Tabla Consulta Comercios por Cliente
+        tablaConsultaComercioPorCliente.setItems(this.comercios);
+        idListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
+        cuitListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCuit()));
+        nombreListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
+        dirListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
+        telListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
     }
 
     @FXML
@@ -306,6 +314,30 @@ public class VentanaPrincipalController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime result = LocalDateTime.parse(dateTime, formatter);
         return result;
+    }
+
+    @FXML
+    public void buscarComercioPorDniCliente(){
+        //tomo valores del front
+        String clienteDni = dniComerciosPorCliente.getText();
+        String desdeFecha = desdeComerciosPorCliente.getEditor().getText();
+        String desdeHora = horaDesdeComerciosPorCliente.getText();
+        String hastaFecha = hastaComerciosPorCliente.getEditor().getText();
+        String hastaHora = horaHastaComerciosPorCliente.getText();
+        //parseo de fecha y hora
+        LocalDateTime desdeLDT = parseToLocalDateTime(desdeFecha,desdeHora);
+        LocalDateTime hastaLDT = parseToLocalDateTime(hastaFecha,hastaHora);
+        //traer registros
+        List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYCliente(desdeLDT,hastaLDT,Cliente.getDni()).execute().body();
+
+            ObservableList<Comercio> comercios = FXCollections.observableArrayList(registros.stream().map(reg -> reg.getComercio()).collect(Collectors.toList()));
+
+            tablaConsultaComercioPorCliente.setItems(comercios);
+        }
+        catch (Exception e){
+            System.out.println("Problema de control de datos");
+            e.printStackTrace();
+        }
     }
 }
 
