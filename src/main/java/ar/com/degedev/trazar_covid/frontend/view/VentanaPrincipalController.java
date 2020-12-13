@@ -20,6 +20,9 @@ import lombok.val;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class VentanaPrincipalController {
 
@@ -259,16 +262,16 @@ public class VentanaPrincipalController {
         try {
             Comercio comercio = comercioListaDesplegableConsulta.getValue();
             String desde = desdeClientesPorComercio.getEditor().getText();
+            String desdeHora = horaDesdeClientesPorComercio.getText();
             String hasta = hastaClientesPorComercio.getEditor().getText();
+            String hastaHora = horaHastaClientesPorComercio.getText();
 
-            System.out.println(desde);
-            System.out.println(hasta);
-            // TODO traer los datos de la bd
-            ObservableList<Cliente> clientes = FXCollections.observableArrayList();
-            // TODO hardcodeado, sacar
-            clientes.add(new Cliente(39490591, "Megan", "Maguire", "Av. Ejército de los Andes 569", "2664828390"));
-            clientes.add(new Cliente(39381308, "Franco", "Merenda", "Av. Ejército de los Andes 569", "260339838"));
+            LocalDateTime desdeLDT = parseToLocalDateTime(desde,desdeHora);
+            LocalDateTime hastaLDT = parseToLocalDateTime(hasta,hastaHora);
 
+            List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYComercio(desdeLDT,hastaLDT,comercio.getId()).execute().body();
+
+            ObservableList<Cliente> clientes = FXCollections.observableArrayList(registros.stream().map(reg -> reg.getCliente()).collect(Collectors.toList()));
 
             tablaConsultaClientePorComercio.setItems(clientes);
         }
@@ -295,6 +298,14 @@ public class VentanaPrincipalController {
         } else {
             dniCliente.setText("Ingrese solo números");
         }
+    }
+
+    public LocalDateTime parseToLocalDateTime(String date, String time){
+
+        String dateTime = date + ' ' + time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime result = LocalDateTime.parse(dateTime, formatter);
+        return result;
     }
 }
 
