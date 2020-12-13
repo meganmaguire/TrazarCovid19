@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class LocalDateAdapter implements JsonSerializer<LocalDateTime> {
+class LocalDateTimeAdapter implements JsonSerializer<LocalDateTime> {
     @Override
     public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
         return new JsonPrimitive(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -35,7 +35,7 @@ public class ApiFactory {
 
     public ApiFactory() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .setLenient().create();
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
