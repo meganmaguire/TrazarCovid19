@@ -179,4 +179,13 @@ public class ExpressionChecker
 
         return ret;
     }
+
+    public boolean isHour(String string) {
+        boolean ret;
+        pattern = Pattern.compile("([0-1][0-9]|2[0-3]):[0-5][0-9]");
+
+        ret = pattern.matcher(string).matches();
+
+        return ret;
+    }
 }

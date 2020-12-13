@@ -186,19 +186,19 @@ public class VentanaPrincipalController {
 
     @FXML
     private void limpiar() {
-        cleanFields(false);
+        cleanFields(true);
     }
 
-    private void cleanFields(boolean createdRegistro) {
-        buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
-        nombreCliente.setText("");
-        apellidoCliente.setText("");
-        dniCliente.setText("");
-        direccionCliente.setText("");
-        telCliente.setText("");
+    private void cleanFields(boolean borrarDni) {
+        this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
+        this.buscarPorDni.setTooltip(null);
+        this.nombreCliente.setText("");
+        this.apellidoCliente.setText("");
+        this.direccionCliente.setText("");
+        this.telCliente.setText("");
 
-        if(!createdRegistro) {
-            comercioListaDesplegable.getSelectionModel().selectFirst();
+        if(borrarDni) {
+            this.dniCliente.setText("");
         }
     }
 
@@ -240,9 +240,6 @@ public class VentanaPrincipalController {
         this.clientesAPI = apis.getClienteAPI();
         this.registroAPI = apis.getRegistroAPI();
         this.comercioAPI = ApplicationCtx.getInstance().getAPIs().getComercioAPI();
-
-
-
 
         try {
             this.comercios = FXCollections.observableArrayList(this.comercioAPI.listarComercios().execute().body());
@@ -292,6 +289,30 @@ public class VentanaPrincipalController {
             String hasta = hastaClientesPorComercio.getEditor().getText();
             String hastaHora = horaHastaClientesPorComercio.getText();
 
+            if (desde.equals("") || hasta.equals("") || desdeHora.equals("") || hastaHora.equals("")){
+                return;
+            }
+
+            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                String hora = desdeHora.substring(0,2);
+                String minuto = desdeHora.substring(2);
+                desdeHora = hora.concat(":").concat(minuto);
+                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                    return;
+                }
+                this.horaDesdeClientesPorComercio.setText(desdeHora);
+            }
+
+            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                String hora = hastaHora.substring(0,2);
+                String minuto = hastaHora.substring(2);
+                hastaHora = hora.concat(":").concat(minuto);
+                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                    return;
+                }
+                this.horaHastaClientesPorComercio.setText(hastaHora);
+            }
+
             LocalDateTime desdeLDT = parseToLocalDateTime(desde,desdeHora);
             LocalDateTime hastaLDT = parseToLocalDateTime(hasta,hastaHora);
 
@@ -317,17 +338,21 @@ public class VentanaPrincipalController {
                     apellidoCliente.setText(this.cliente.getApellido());
                     direccionCliente.setText(this.cliente.getDireccion());
                     telCliente.setText(this.cliente.getTelefono());
+                    this.buscarPorDni.setTooltip(null);
+                    this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
                 }
             } catch (IOException e) {
+                cleanFields(false);
                 this.buscarPorDni.setStyle("-fx-text-fill: red");
+                this.buscarPorDni.setTooltip(new Tooltip("No se encontraron resultados"));
             }
         } else {
-            dniCliente.setText("Ingrese solo números");
+            cleanFields(true);
+            dniCliente.setText("");
         }
     }
 
     public LocalDateTime parseToLocalDateTime(String date, String time){
-
         String dateTime = date + ' ' + time;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime result = LocalDateTime.parse(dateTime, formatter);
@@ -343,11 +368,44 @@ public class VentanaPrincipalController {
             String desdeHora = horaDesdeComerciosPorCliente.getText();
             String hastaFecha = hastaComerciosPorCliente.getEditor().getText();
             String hastaHora = horaHastaComerciosPorCliente.getText();
+
+            int dni;
+            try {dni = Integer.parseInt(clienteDni);}
+            catch (NumberFormatException e) {
+                this.dniComerciosPorCliente.setText("");
+                return;
+            }
+
+            if (desdeFecha.equals("") || hastaFecha.equals("") || desdeHora.equals("") || hastaHora.equals("")){
+                return;
+            }
+
+            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                String hora = desdeHora.substring(0,2);
+                String minuto = desdeHora.substring(2);
+                desdeHora = hora.concat(":").concat(minuto);
+                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                    return;
+                }
+                this.horaDesdeComerciosPorCliente.setText(desdeHora);
+            }
+
+            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                String hora = hastaHora.substring(0,2);
+                String minuto = hastaHora.substring(2);
+                hastaHora = hora.concat(":").concat(minuto);
+                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                    return;
+                }
+                this.horaHastaComerciosPorCliente.setText(hastaHora);
+            }
+
+
             //parseo de fecha y hora
             LocalDateTime desdeLDT = parseToLocalDateTime(desdeFecha,desdeHora);
             LocalDateTime hastaLDT = parseToLocalDateTime(hastaFecha,hastaHora);
             //traer registros
-            List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYCliente(desdeLDT,hastaLDT, Integer.valueOf(clienteDni)).execute().body();
+            List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYCliente(desdeLDT,hastaLDT, dni).execute().body();
 
                 ObservableList<Comercio> comercios = FXCollections.observableArrayList(registros.stream().map(reg -> reg.getComercio()).collect(Collectors.toList()));
 
