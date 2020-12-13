@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import lombok.val;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 public class VentanaPrincipalController {
@@ -180,12 +181,17 @@ public class VentanaPrincipalController {
 
             Registro nuevoRegistro = new Registro(0,cliente, comercio, LocalDateTime.now());
 
-            this.registroAPI.altaRegistro(nuevoRegistro).execute();
+            if (!this.clientes.contains(cliente)) {
+                this.clientes.add(cliente);
+            }
 
             cleanFields(true);
 
-        } catch (Exception e) {
-            System.out.println("Algo esta roto pibe");
+            this.registroAPI.altaRegistro(nuevoRegistro).execute();
+
+        } catch (Exception ignored) {
+            // GSon lanza una excepcion que es necesaria para el correcto funcionamiento de la aplicacion
+            // Un to-do seria buscar esta excepcion mas adentro
         }
 
     }
