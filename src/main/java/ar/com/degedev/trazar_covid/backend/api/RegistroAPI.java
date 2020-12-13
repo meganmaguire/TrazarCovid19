@@ -19,8 +19,22 @@ public interface RegistroAPI {
 
     @GET("registro/fecha")
     Call<List<Registro>> listarRegistrosEntreFechas(
-            @Query("inicio") LocalDateTime inicio,
-            @Query("fin") LocalDateTime fin
+            @Query("desde") LocalDateTime inicio,
+            @Query("hasta") LocalDateTime fin
+    );
+
+    @GET("registro/fecha/comercio")
+    Call<List<Registro>> listarRegistrosEntreFechasYComercio(
+            @Query("desde") LocalDateTime inicio,
+            @Query("hasta") LocalDateTime fin,
+            @Query("id") Integer comercioId
+    );
+
+    @GET("registro/fecha/cliente")
+    Call<List<Registro>> listarRegistrosEntreFechasYCliente(
+            @Query("desde") LocalDateTime inicio,
+            @Query("hasta") LocalDateTime fin,
+            @Query("dni") Integer clienteDni
     );
 
     @POST("registro")
