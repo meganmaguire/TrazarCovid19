@@ -5,23 +5,17 @@ import ar.com.degedev.trazar_covid.backend.api.ComercioAPI;
 import ar.com.degedev.trazar_covid.backend.api.RegistroAPI;
 import ar.com.degedev.trazar_covid.backend.api.UserAPI;
 import ar.com.degedev.trazar_covid.frontend.model.User;
-import com.google.gson.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import lombok.val;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-class LocalDateTimeAdapter implements JsonSerializer<LocalDateTime> {
-    @Override
-    public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
-        return new JsonPrimitive(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-    }
-}
 
 public class ApiFactory {
     private static final String BASE_URL = "http://localhost:8080/";
@@ -34,10 +28,13 @@ public class ApiFactory {
     private UserAPI userAPI;
 
     public ApiFactory() {
-        Gson gson = new GsonBuilder().setPrettyPrinting()
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+        val gson = new GsonBuilder().setPrettyPrinting()
+                .registerTypeAdapter(
+                        LocalDateTime.class,
+                        (JsonSerializer<LocalDateTime>) (localDateTime, type, ctx) ->
+                                new JsonPrimitive(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
                 .setLenient().create();
-        OkHttpClient httpClient = new OkHttpClient.Builder()
+        val httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     val original = chain.request();
                     val request = original.newBuilder()

@@ -8,7 +8,6 @@ import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
-import com.google.gson.Gson;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -154,7 +153,7 @@ public class VentanaPrincipalController {
     }
 
     private void cleanFields(boolean createdRegistro) {
-        this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
+        buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
         nombreCliente.setText("");
         apellidoCliente.setText("");
         dniCliente.setText("");
