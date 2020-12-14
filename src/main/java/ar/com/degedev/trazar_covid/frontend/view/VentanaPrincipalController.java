@@ -8,9 +8,7 @@ import ar.com.degedev.trazar_covid.backend.util.ExpressionChecker;
 import ar.com.degedev.trazar_covid.frontend.model.Cliente;
 import ar.com.degedev.trazar_covid.frontend.model.Comercio;
 import ar.com.degedev.trazar_covid.frontend.model.Registro;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,10 +16,10 @@ import javafx.scene.control.*;
 import lombok.val;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class VentanaPrincipalController {
@@ -174,8 +172,6 @@ public class VentanaPrincipalController {
     private Button enviarComercio;
 
 
-
-    private ExpressionChecker expressionChecker;
     private ComercioAPI comercioAPI;
     private ClienteAPI clientesAPI;
     private RegistroAPI registroAPI;
@@ -195,7 +191,7 @@ public class VentanaPrincipalController {
     }
 
     private void cleanFields(boolean borrarDni, boolean registro) {
-        if (registro){
+        if (registro) {
             this.buscarPorDni.setStyle("-fx-text-fill: #4d4d4d");
             this.buscarPorDni.setTooltip(null);
             this.nombreCliente.setText("");
@@ -227,7 +223,7 @@ public class VentanaPrincipalController {
 
             Comercio comercio = this.comercioListaDesplegable.getValue();
 
-            Registro nuevoRegistro = new Registro(0,cliente, comercio, LocalDateTime.now());
+            Registro nuevoRegistro = new Registro(0, cliente, comercio, LocalDateTime.now());
 
             if (!this.clientes.contains(cliente)) {
                 this.clientes.add(cliente);
@@ -260,7 +256,8 @@ public class VentanaPrincipalController {
 
             cleanFields(false, false);
 
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
 
@@ -295,12 +292,12 @@ public class VentanaPrincipalController {
         telListadoClientes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
 
         // Tabla Consulta Clientes por Comercio
-        apellidoClientesPorComercio.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApellido()));
+        apellidoClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApellido()));
         nombreClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
         dniClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDni()));
         dirClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDireccion()));
         telClientesPorComercio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTelefono()));
-    
+
         //Tabla Consulta Comercios por Cliente
         //tablaConsultaComercioPorCliente.setItems(this.comercios);
         idListadoComercios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
@@ -311,7 +308,7 @@ public class VentanaPrincipalController {
     }
 
     @FXML
-    public void buscarPersonaPorComercio(){
+    public void buscarPersonaPorComercio() {
 
         try {
             Comercio comercio = comercioListaDesplegableConsulta.getValue();
@@ -320,44 +317,46 @@ public class VentanaPrincipalController {
             String hasta = hastaClientesPorComercio.getEditor().getText();
             String hastaHora = horaHastaClientesPorComercio.getText();
 
-            if (desde.equals("") || hasta.equals("") || desdeHora.equals("") || hastaHora.equals("")){
+            if (desde.equals("") || hasta.equals("") || desdeHora.equals("") || hastaHora.equals("")) {
                 return;
             }
 
-            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
-                String hora = desdeHora.substring(0,2);
-                String minuto = desdeHora.substring(2);
+            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)) {
+                val hora = desdeHora.substring(0, 2);
+                val minuto = desdeHora.substring(2);
                 desdeHora = hora.concat(":").concat(minuto);
-                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)) {
                     return;
                 }
                 this.horaDesdeClientesPorComercio.setText(desdeHora);
             }
 
-            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
-                String hora = hastaHora.substring(0,2);
-                String minuto = hastaHora.substring(2);
+            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)) {
+                val hora = hastaHora.substring(0, 2);
+                val minuto = hastaHora.substring(2);
                 hastaHora = hora.concat(":").concat(minuto);
-                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)) {
                     return;
                 }
                 this.horaHastaClientesPorComercio.setText(hastaHora);
             }
 
-            LocalDateTime desdeLDT = parseToLocalDateTime(desde,desdeHora);
-            LocalDateTime hastaLDT = parseToLocalDateTime(hasta,hastaHora);
+            val desdeLDT = parseToLocalDateTime(desde, desdeHora);
+            val hastaLDT = parseToLocalDateTime(hasta, hastaHora);
 
-            List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYComercio(desdeLDT,hastaLDT,comercio.getId()).execute().body();
+            val registros = Optional.ofNullable(
+                    registroAPI.listarRegistrosEntreFechasYComercio(desdeLDT, hastaLDT, comercio.getId()).execute().body())
+                    .orElse(Collections.emptyList());
 
-            ObservableList<Cliente> clientes = FXCollections.observableArrayList(registros.stream().map(reg -> reg.getCliente()).collect(Collectors.toList()));
+            val clientes = FXCollections.observableArrayList(registros.stream().map(Registro::getCliente).collect(Collectors.toList()));
 
             tablaConsultaClientePorComercio.setItems(clientes);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Problema de control de datos");
             e.printStackTrace();
         }
     }
+
     @FXML
     public void buscarPersonaPorDni() {
         String clienteDni = dniCliente.getText();
@@ -383,16 +382,15 @@ public class VentanaPrincipalController {
         }
     }
 
-    public LocalDateTime parseToLocalDateTime(String date, String time){
-        String dateTime = date + ' ' + time;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime result = LocalDateTime.parse(dateTime, formatter);
-        return result;
+    public LocalDateTime parseToLocalDateTime(String date, String time) {
+        val dateTime = date + ' ' + time;
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return LocalDateTime.parse(dateTime, formatter);
     }
 
     @FXML
-    public void buscarComercioPorDniCliente(){
-        try{
+    public void buscarComercioPorDniCliente() {
+        try {
             //tomo valores del front
             String clienteDni = dniComerciosPorCliente.getText();
             String desdeFecha = desdeComerciosPorCliente.getEditor().getText();
@@ -401,31 +399,32 @@ public class VentanaPrincipalController {
             String hastaHora = horaHastaComerciosPorCliente.getText();
 
             int dni;
-            try {dni = Integer.parseInt(clienteDni);}
-            catch (NumberFormatException e) {
+            try {
+                dni = Integer.parseInt(clienteDni);
+            } catch (NumberFormatException e) {
                 this.dniComerciosPorCliente.setText("");
                 return;
             }
 
-            if (desdeFecha.equals("") || hastaFecha.equals("") || desdeHora.equals("") || hastaHora.equals("")){
+            if (desdeFecha.equals("") || hastaFecha.equals("") || desdeHora.equals("") || hastaHora.equals("")) {
                 return;
             }
 
-            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
-                String hora = desdeHora.substring(0,2);
-                String minuto = desdeHora.substring(2);
+            if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)) {
+                val hora = desdeHora.substring(0, 2);
+                val minuto = desdeHora.substring(2);
                 desdeHora = hora.concat(":").concat(minuto);
-                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)){
+                if (!ExpressionChecker.getExpressionChecker().isHour(desdeHora)) {
                     return;
                 }
                 this.horaDesdeComerciosPorCliente.setText(desdeHora);
             }
 
-            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
-                String hora = hastaHora.substring(0,2);
-                String minuto = hastaHora.substring(2);
+            if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)) {
+                val hora = hastaHora.substring(0, 2);
+                val minuto = hastaHora.substring(2);
                 hastaHora = hora.concat(":").concat(minuto);
-                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)){
+                if (!ExpressionChecker.getExpressionChecker().isHour(hastaHora)) {
                     return;
                 }
                 this.horaHastaComerciosPorCliente.setText(hastaHora);
@@ -433,16 +432,17 @@ public class VentanaPrincipalController {
 
 
             //parseo de fecha y hora
-            LocalDateTime desdeLDT = parseToLocalDateTime(desdeFecha,desdeHora);
-            LocalDateTime hastaLDT = parseToLocalDateTime(hastaFecha,hastaHora);
+            val desdeLDT = parseToLocalDateTime(desdeFecha, desdeHora);
+            val hastaLDT = parseToLocalDateTime(hastaFecha, hastaHora);
             //traer registros
-            List<Registro> registros = this.registroAPI.listarRegistrosEntreFechasYCliente(desdeLDT,hastaLDT, dni).execute().body();
+            val registros = Optional.ofNullable(
+                    this.registroAPI.listarRegistrosEntreFechasYCliente(desdeLDT, hastaLDT, dni).execute().body())
+                    .orElse(Collections.emptyList());
 
-                ObservableList<Comercio> comercios = FXCollections.observableArrayList(registros.stream().map(reg -> reg.getComercio()).collect(Collectors.toList()));
+            val comercios = FXCollections.observableArrayList(registros.stream().map(Registro::getComercio).collect(Collectors.toList()));
 
-                tablaConsultaComercioPorCliente.setItems(comercios);
-        }
-        catch (Exception e){
+            tablaConsultaComercioPorCliente.setItems(comercios);
+        } catch (Exception e) {
             System.out.println("Problema de control de datos");
             e.printStackTrace();
         }
